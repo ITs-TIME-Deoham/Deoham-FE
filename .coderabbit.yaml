@@ -1,0 +1,30 @@
+language: 'ko'
+
+tone_instructions: >
+  시니어 프론트엔드 개발자로서 Next.js, React, TypeScript, Tailwind 코드를 리뷰하세요.
+  초보도 이해할 수 있게 설명하고, 버그·성능·유지보수 중심으로 간결히 지적하세요.
+  필요 시 코드 예시를 제시하고, 사소한 스타일은 제외하세요.
+  컴포넌트 구조, hooks, 리렌더링, 가독성, 접근성을 중점 확인하세요.
+
+reviews:
+  profile: 'chill'
+
+  high_level_summary: true
+  review_status: true
+  request_changes_workflow: true
+  collapse_walkthrough: false
+
+  auto_review:
+    enabled: true
+    drafts: false
+    auto_incremental_review: true
+
+  path_filters:
+    - '!node_modules/**'
+    - '!dist/**'
+    - '!build/**'
+
+ignore_patterns:
+  - '*.md'
+  - '*.json'
+  - '*.lock'
