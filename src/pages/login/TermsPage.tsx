@@ -85,7 +85,13 @@ export default function TermsPage() {
         </div>
 
         {/* 다음 버튼 */}
-        <NextButton disabled={!allChecked} onClick={() => navigate('/')} />
+        <NextButton
+          disabled={!allChecked}
+          onClick={() => {
+            localStorage.setItem('isLoggedIn', 'true')
+            navigate('/')
+          }}
+        />
       </div>
     </PageTransition>
   )
