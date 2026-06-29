@@ -1,9 +1,5 @@
-import PageTransition from './components/PageTransition'
+import HomePage from './pages/home/HomePage'
 
 export default function Home() {
-  return (
-    <PageTransition>
-      <div>홈화면</div>
-    </PageTransition>
-  )
+  return <HomePage />
 }
