@@ -4,6 +4,7 @@ import Home from './Home'
 import LoginPage from './pages/login/LoginPage'
 import ProfilePage from './pages/login/ProfilePage'
 import TermsPage from './pages/login/TermsPage'
+import RequestPage from './pages/home/RequestPage'
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const isLoggedIn = localStorage.getItem('onboardingCompleted') === 'true'
@@ -16,13 +17,19 @@ function App() {
   return (
     <div
       className="relative overflow-hidden"
-      style={{ width: '100%', maxWidth: 390, minHeight: '100dvh', margin: '0 auto' }}
+      style={{
+        width: '100%',
+        maxWidth: 390,
+        minHeight: '100dvh',
+        margin: '0 auto',
+      }}
     >
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/terms" element={<TermsPage />} />
+
           <Route
             path="/"
             element={
@@ -31,12 +38,24 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          <Route
+            path="/request"
+            element={
+              <ProtectedRoute>
+                <RequestPage />
+              </ProtectedRoute>
+            }
+          />
+
           <Route
             path="*"
             element={
-              localStorage.getItem('onboardingCompleted') === 'true'
-                ? <Navigate to="/" replace />
-                : <Navigate to="/login" replace />
+              localStorage.getItem('onboardingCompleted') === 'true' ? (
+                <Navigate to="/" replace />
+              ) : (
+                <Navigate to="/login" replace />
+              )
             }
           />
         </Routes>
