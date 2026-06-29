@@ -10,7 +10,7 @@ export default function BottomNav() {
   const location = useLocation()
   const navigate = useNavigate()
 
-  const isHome = location.pathname === '/home'
+  const isHome = location.pathname === '/' || location.pathname === '/home'
   const isChat = location.pathname === '/chat'
 
   return (
