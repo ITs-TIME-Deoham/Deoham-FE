@@ -56,6 +56,7 @@ export default function BottomNav() {
 
       <button
         type="button"
+        onClick={() => navigate('/request')}
         className="absolute left-1/2 top-0 z-20 h-[70px] w-[70px] -translate-x-1/2 rounded-full shadow-[0_8px_16px_rgba(255,158,27,0.35)]"
       >
         <img
