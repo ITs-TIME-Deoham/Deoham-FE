@@ -1,14 +1,19 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import profileChar from '../../assets/profile_char.svg'
 import PageTransition from '../../components/PageTransition'
+import PageHeader from '../../components/PageHeader'
 import NicknameInput from '../../components/NicknameInput'
-import ProfileImagePicker from './ProfileImagePicker'
+import ProfileImagePicker from '../login/ProfileImagePicker'
+import profileChar from '../../assets/profile_char.svg'
 
-export default function ProfilePage() {
+export default function ProfileEditPage() {
   const navigate = useNavigate()
-  const [nickname, setNickname] = useState('')
-  const [profileImage, setProfileImage] = useState<string | null>(null)
+  const [nickname, setNickname] = useState(
+    () => localStorage.getItem('nickname') ?? '당당한 당근'
+  )
+  const [profileImage, setProfileImage] = useState<string | null>(() =>
+    localStorage.getItem('profileImage')
+  )
 
   return (
     <PageTransition>
@@ -16,29 +21,25 @@ export default function ProfilePage() {
         className="relative mx-auto bg-white overflow-hidden"
         style={{ width: '100%', maxWidth: 390, minHeight: '100dvh' }}
       >
-        {/* 진행 단계 바 */}
-        <div className="absolute flex gap-1 items-center left-6 top-10">
-          <div className="h-1 w-[169px] rounded-full bg-[#ff9e1b]" />
-          <div className="h-1 w-[169px] rounded-full bg-[#c6c6c6]" />
-        </div>
-
-        {/* 타이틀 */}
-        <div className="absolute left-6 top-[104px] text-[22px] font-medium leading-7 text-black">
-          <p>온도에서 사용할</p>
-          <p>프로필을 만들어주세요</p>
-        </div>
+        {/* 헤더 */}
+        <PageHeader title="프로필 편집" />
 
         {/* 프로필 이미지 */}
         <ProfileImagePicker
           defaultImage={profileChar}
-          className="top-[261px]"
+          className="top-[160px]"
+          initialValue={profileImage}
           onChange={setProfileImage}
         />
 
         {/* 닉네임 입력 */}
-        <NicknameInput value={nickname} onChange={setNickname} />
+        <NicknameInput
+          value={nickname}
+          onChange={setNickname}
+          className="top-[422px]"
+        />
 
-        {/* 다음 버튼 */}
+        {/* 저장하기 버튼 */}
         <button
           type="button"
           className={`absolute left-6 top-[720px] flex h-[60px] w-[342px] items-center justify-center rounded-full text-[20px] font-bold text-white transition-colors ${nickname.trim() ? 'bg-[#ff9e1b]' : 'bg-[#ff9e1b]/50'}`}
@@ -46,10 +47,10 @@ export default function ProfilePage() {
           onClick={() => {
             localStorage.setItem('nickname', nickname)
             if (profileImage) localStorage.setItem('profileImage', profileImage)
-            navigate('/terms')
+            navigate(-1)
           }}
         >
-          다음
+          저장하기
         </button>
       </div>
     </PageTransition>
