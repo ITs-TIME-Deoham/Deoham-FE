@@ -21,7 +21,12 @@ export default function HomePage() {
     const saved = localStorage.getItem('myRequest')
 
     if (saved) {
-      setMyRequest(JSON.parse(saved))
+      try {
+        setMyRequest(JSON.parse(saved))
+      } catch {
+        localStorage.removeItem('myRequest')
+        setMyRequest(null)
+      }
     }
 
     // 요청 생성 직후 삭제 가이드 표시

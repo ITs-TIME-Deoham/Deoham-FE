@@ -209,8 +209,6 @@ export default function RequestPage() {
           localStorage.setItem('showDeleteGuide', 'true')
 
           navigate('/')
-
-          navigate('/')
         }}
         className={`absolute bottom-[68px] left-6 h-14 w-[342px] rounded-full text-xl font-bold text-white ${
           isValid ? 'bg-[#FF9814]' : 'bg-[#FFC878] cursor-not-allowed'
