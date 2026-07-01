@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { motion } from 'framer-motion'
+
 import photo from '../assets/photo.png'
 
 type MyRequest = {
@@ -8,7 +10,19 @@ type MyRequest = {
   description: string
 }
 
-export default function MyRequestCard({ request }: { request: MyRequest }) {
+type Props = {
+  request: MyRequest
+  onDelete: () => void
+  onDragStart: () => void
+  onDragEnd: () => void
+}
+
+export default function MyRequestCard({
+  request,
+  onDelete,
+  onDragStart,
+  onDragEnd,
+}: Props) {
   const [bumpCount, setBumpCount] = useState(
     Number(localStorage.getItem('bumpCount') ?? 0)
   )
@@ -21,14 +35,25 @@ export default function MyRequestCard({ request }: { request: MyRequest }) {
     setBumpCount(next)
     localStorage.setItem('bumpCount', String(next))
 
-    // 나중에 백엔드 연결
-    // PATCH /requests/{id}/bump
-
     alert('요청이 다시 전송되었습니다.')
   }
 
   return (
-    <section className="flex h-[508px] w-[342px] flex-col rounded-[20px] border border-[#FFC878] bg-white px-[26px] py-5 shadow-[0_0_4px_rgba(255,158,27,1),0_4px_4px_rgba(0,0,0,0.15)]">
+    <motion.section
+      drag="y"
+      dragConstraints={{ top: -180, bottom: 0 }}
+      dragElastic={0.15}
+      onDragStart={onDragStart}
+      onDragEnd={(_, info) => {
+        onDragEnd()
+
+        // 위로 120px 이상 올리면 삭제
+        if (info.offset.y < -120) {
+          onDelete()
+        }
+      }}
+      className="flex h-[508px] w-[342px] flex-col rounded-[20px] border border-[#FFC878] bg-white px-[26px] py-5 shadow-[0_0_4px_rgba(255,158,27,1),0_4px_4px_rgba(0,0,0,0.15)]"
+    >
       <p className="text-center text-sm text-[#666666]">30분 전</p>
 
       <div className="mt-4 flex justify-center">
@@ -79,6 +104,6 @@ export default function MyRequestCard({ request }: { request: MyRequest }) {
       >
         다시 요청하기 ({bumpCount}/3회)
       </button>
-    </section>
+    </motion.section>
   )
 }

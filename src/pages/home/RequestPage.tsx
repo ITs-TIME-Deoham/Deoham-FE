@@ -205,6 +205,11 @@ export default function RequestPage() {
             })
           )
 
+          // 홈 진입 시 삭제 튜토리얼 표시
+          localStorage.setItem('showDeleteGuide', 'true')
+
+          navigate('/')
+
           navigate('/')
         }}
         className={`absolute bottom-[68px] left-6 h-14 w-[342px] rounded-full text-xl font-bold text-white ${
